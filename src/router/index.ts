@@ -19,11 +19,14 @@ export async function setupRouter(app: App) {
   app.use(router)
 }
 
+// 添加动态路由
 export async function addDynamicRoutes() {
+  // 获取 token
   const token = getToken()
 
   // 没有token情况
   if (isNullOrWhitespace(token)) {
+    // 添加空路由
     router.addRoute(EMPTY_ROUTE)
     return
   }
@@ -32,16 +35,18 @@ export async function addDynamicRoutes() {
   try {
     const userStore = useUserStore()
     const permissionStore = usePermissionStore()
+    // 如果用户id不存,就请求接口
     !userStore.userId && (await userStore.getUserInfo())
-    // 
+    // 根据用户角色分配路由权限--
     const accessRoutes = permissionStore.generateRoutes(userStore.role)
+
     accessRoutes.forEach((route: RouteType) => {
       !router.hasRoute(route.name) && router.addRoute(route)
     })
+
     router.hasRoute(EMPTY_ROUTE.name) && router.removeRoute(EMPTY_ROUTE.name)
     router.addRoute(NOT_FOUND_ROUTE)
-  }
-  catch (error) {
+  }catch (error) {
     console.error(error)
   }
 }

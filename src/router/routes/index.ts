@@ -58,14 +58,18 @@ export const NOT_FOUND_ROUTE: RouteType = {
   isHidden: true,
 }
 
+// 空路由
 export const EMPTY_ROUTE: RouteType = {
   name: 'Empty',
   path: '/:pathMatch(.*)*',
   component: () => {},
 }
 
+// 获取所有的动态路由
 const modules = import.meta.glob('@/views/**/route.ts', { eager: true }) as RouteModule
+// console.log('modules3434',JSON.stringify(modules))
 const asyncRoutes: RoutesType = []
+// console.log('Object.keys(modules)',JSON.stringify(Object.keys(modules)))
 Object.keys(modules).forEach((key) => {
   asyncRoutes.push(modules[key].default)
 })

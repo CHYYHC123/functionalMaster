@@ -18,11 +18,14 @@ export const usePermissionStore = defineStore('permission', {
     },
   },
   actions: {
+    // 获取角色对应的权限
     generateRoutes(role: Array<string> = []): RoutesType {
+      // 获取所有路由
       const accessRoutes = filterAsyncRoutes(asyncRoutes, role)
       this.accessRoutes = accessRoutes
       return accessRoutes
     },
+
     resetPermission() {
       this.$reset()
     },

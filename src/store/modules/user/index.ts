@@ -27,27 +27,29 @@ export const useUserStore = defineStore('user', {
     avatar(): string {
       return this.userInfo.avatar || ''
     },
-    role(): Array<string> {
+    // 获取对应角色
+    role(): Array<string> {  
       return this.userInfo.role || []
     },
   },
   actions: {
+    // 获取用户信息
     async getUserInfo() {
       try {
         const res: any = await api.getUser()
+        // console.log('res1212',JSON.stringify(res))
         if (res.code === 0) {
           const { id, name, avatar, role } = res.data
           this.userInfo = { id, name, avatar, role }
           return Promise.resolve(res.data)
-        }
-        else {
+        }else {
           return Promise.reject(res)
         }
-      }
-      catch (error) {
+      } catch (error) {
         return Promise.reject(error)
       }
     },
+    // 退出登录
     async logout() {
       const { resetTabs } = useTabStore()
       const { resetPermission } = usePermissionStore()
@@ -58,6 +60,7 @@ export const useUserStore = defineStore('user', {
       this.$reset()
       toLogin()
     },
+    // 设置用户信息
     setUserInfo(userInfo = {}) {
       this.userInfo = { ...this.userInfo, ...userInfo }
     },

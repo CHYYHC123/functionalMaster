@@ -45,7 +45,7 @@ interface MenuItem {
 
 // 处理路由对应的每一项菜单
 function getMenuItem(route: RouteType, basePath = ''): MenuItem {
-  console.log('route343', JSON.stringify(route));
+  // console.log('route343', JSON.stringify(route));
   let menuItem: MenuItem = {
     label: (route.meta && route.meta.title) || route.name,
     key: route.name,

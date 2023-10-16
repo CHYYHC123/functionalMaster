@@ -63,17 +63,20 @@ const isRemember = useStorage('isRemember', false);
 async function handleLogin() {
   const { name, password } = loginInfo.value;
   if (!name || !password) {
-    window.$message?.warning('请输入用户名和密码');
+    window.$message?.warning('请输入用户名或密码');
     return;
   }
   try {
     loging.value = true;
+    // 获取token
     const res: any = await api.login({ name, password: password.toString() });
     window.$notification?.success({ title: '登录成功！', duration: 2500 });
+
     setToken(res.data.token);
     if (isRemember.value) setLocal('loginInfo', { name, password });
     else removeLocal('loginInfo');
 
+    // 添加动态路由
     await addDynamicRoutes();
     if (query.redirect) {
       const path = query.redirect as string;
