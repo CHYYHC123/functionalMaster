@@ -2,22 +2,32 @@ import type { RouteType } from '~/types/router'
 const Layout = () => import('@/layout/index.vue')
 
 export default {
-  name: 'Dashboard',
+  name: 'voiceWorkbench',
   path: '/',
   component: Layout,
-  redirect: '/workbench',
+  redirect: '/inputTextDubbing',
   meta: {
+    title: '文字转语言',
+    icon: 'mdi:home',
     order: 0,
   },
   children: [
     {
-      name: 'Workbench',
-      path: 'workbench',
-      component: () => import('./index.vue'),
+      name: 'inputTextDubbing',
+      path: 'inputTextDubbing',
+      component: () => import('./inputTextDubbing/index.vue'),
       meta: {
-        title: '工作台',
+        title: '输入文字配音',
         icon: 'mdi:home',
       },
-    },
+    },{
+      name: 'importFileDubbing',
+      path: 'importFileDubbing',
+      component: () => import('./importFileDubbing/index.vue'),
+      meta: {
+        title: '导入文件配音',
+        icon: 'mdi:home',
+      },
+    }
   ],
 } as RouteType

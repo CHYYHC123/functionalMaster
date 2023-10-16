@@ -63,6 +63,7 @@ onMounted(() => {
 onBeforeUnmount(() => {
   window.removeEventListener('resize', handleWindowResize)
 })
+console.log('themStore.naiveThemeOverrides',JSON.stringify(themStore.naiveThemeOverrides))
 </script>
 
 <template>

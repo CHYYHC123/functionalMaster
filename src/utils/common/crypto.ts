@@ -18,8 +18,8 @@ export function encrypto(data: any) {
 export function decrypto(cipherText: string) {
   const bytes = CryptoJS.AES.decrypt(cipherText, CryptoSecret)
   const originalText = bytes.toString(CryptoJS.enc.Utf8)
-  if (originalText)
+  if (originalText){
     return JSON.parse(originalText)
-
+  }
   return null
 }

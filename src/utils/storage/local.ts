@@ -20,8 +20,9 @@ export function getLocal<T>(key: string) {
     let storageData: StorageData | null = null
     try {
       storageData = decrypto(json)
+    }catch(err) {
+      console.log(err)
     }
-    catch {}
     if (storageData) {
       const { value, expire } = storageData
       // 没有过期时间或者在有效期内则直接返回

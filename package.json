@@ -20,6 +20,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@skit/x.naive-ui": "^0.7.0",
     "@vueuse/core": "^8.9.4",
     "@zclzone/crud": "^0.0.13",
     "axios": "^1.2.2",
