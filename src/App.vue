@@ -8,4 +8,10 @@
 
 <script setup lang="ts">
 import AppProvider from '@/components/common/AppProvider.vue';
+import { findUsers } from '@/api/test.ts';
+
+onMounted(async () => {
+  const res = await findUsers();
+  console.log('res', JSON.stringify(res));
+});
 </script>

@@ -12,6 +12,8 @@
     "noUnusedLocals": true,
     "strictNullChecks": true,
     "forceConsistentCasingInFileNames": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
     "paths": {
       "~/*": ["./*"],
       "@/*": ["./src/*"]
