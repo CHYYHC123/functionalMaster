@@ -45,8 +45,8 @@ interface LoginInfo {
 }
 
 const loginInfo = ref<LoginInfo>({
-  name: '',
-  password: ''
+  name: 'admin',
+  password: '123456'
 });
 
 // 获取登录信息
@@ -70,6 +70,7 @@ async function handleLogin() {
     loging.value = true;
     // 获取token
     const res: any = await api.login({ name, password: password.toString() });
+
     window.$notification?.success({ title: '登录成功！', duration: 2500 });
 
     setToken(res.data.token);

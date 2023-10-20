@@ -27,7 +27,13 @@ export default defineConfig((configEnv: ConfigEnv) => {
       host: '0.0.0.0',
       port: VITE_PORT,
       open: false,
-      proxy: createViteProxy(VITE_USE_PROXY, VITE_PROXY_TYPE as ProxyType),
+      proxy: {
+        '/api': {
+          target: 'http://127.0.0.1:3001',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, '')
+        }
+      }
     },
     build: {
       reportCompressedSize: false,

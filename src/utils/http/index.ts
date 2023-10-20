@@ -9,6 +9,7 @@ export function createAxios(options = {}) {
     ...defaultOptions,
     ...options,
   })
+  console.log('service',JSON.stringify(service))
   service.interceptors.request.use(reqResolve, reqReject)
   service.interceptors.response.use(resResolve, resReject)
   return service

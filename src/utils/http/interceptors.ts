@@ -6,22 +6,22 @@ import type { RequestConfig } from '~/types/axios'
 /** 请求拦截 */
 export function reqResolve(config: RequestConfig) {
   // 处理不需要token的请求
-  if (config.noNeedToken)
-    return config
+  if (config.noNeedToken) return config
 
-  const token = getToken()
-  if (!token)
-    return Promise.reject(new AxiosRejectError({ code: 401, message: '登录已过期，请重新登录！' }))
+  // const token = getToken()
+  // if (!token) {
+  //  return Promise.reject(new AxiosRejectError({ code: 401, message: '登录已过期，请重新登录！' }))
+  // }
 
   /**
    * * 加上 token
    * ! 认证方案: JWT Bearer
    */
-  const Authorization = config.headers?.Authorization || `Bearer ${token}`
-  if (config.headers)
-    config.headers.Authorization = config.headers.Authorization || `Bearer ${token}`
-  else
-    config.headers = { Authorization }
+  // const Authorization = config.headers?.Authorization || `Bearer ${token}`
+  // if (config.headers)
+  //   config.headers.Authorization = config.headers.Authorization || `Bearer ${token}`
+  // else
+  //   config.headers = { Authorization }
 
   return config
 }
@@ -49,6 +49,7 @@ export function resResolve(response: AxiosResponse) {
 
 /** 响应错误拦截 */
 export function resReject(error: AxiosError) {
+  console.log('error34',JSON.stringify(error))
   if (!error || !error.response) {
     const code = error?.code
     /** 根据code处理对应的操作，并返回处理后的message */
