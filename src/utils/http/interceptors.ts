@@ -8,20 +8,20 @@ export function reqResolve(config: RequestConfig) {
   // 处理不需要token的请求
   if (config.noNeedToken) return config
 
-  // const token = getToken()
-  // if (!token) {
-  //  return Promise.reject(new AxiosRejectError({ code: 401, message: '登录已过期，请重新登录！' }))
-  // }
+  const token = getToken()
+  if (!token) {
+   return Promise.reject(new AxiosRejectError({ code: 401, message: '登录已过期，请重新登录！' }))
+  }
 
   /**
    * * 加上 token
    * ! 认证方案: JWT Bearer
    */
-  // const Authorization = config.headers?.Authorization || `Bearer ${token}`
-  // if (config.headers)
-  //   config.headers.Authorization = config.headers.Authorization || `Bearer ${token}`
-  // else
-  //   config.headers = { Authorization }
+  const Authorization = config.headers?.Authorization || `Bearer ${token}`
+  if (config.headers)
+    config.headers.Authorization = config.headers.Authorization || `Bearer ${token}`
+  else
+    config.headers = { Authorization }
 
   return config
 }
@@ -34,6 +34,7 @@ export function reqReject(error: AxiosError) {
 /** 响应拦截 */
 export function resResolve(response: AxiosResponse) {
   // TODO: 处理不同的 response.headers
+  console.log('response3',JSON.stringify(response))
   const { data, status, config, statusText } = response
   if (data?.code !== 0) {
     const code = data?.code ?? status

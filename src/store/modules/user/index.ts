@@ -37,7 +37,7 @@ export const useUserStore = defineStore('user', {
     async getUserInfo() {
       try {
         const res: any = await api.getUser()
-        // console.log('res1212',JSON.stringify(res))
+        console.log('res1212',JSON.stringify(res))
         if (res.code === 0) {
           const { id, name, avatar, role } = res.data
           this.userInfo = { id, name, avatar, role }

@@ -1,6 +1,6 @@
 import { request } from '@/utils'
 
 export default {
-  getUser: () => request.get('/user'),
-  refreshToken: () => request.post('/auth/refreshToken'),
+  getUser: () => request.get('/users/user/info'),
+  refreshToken: () => request.post('/users/auth/refreshToken'),
 }

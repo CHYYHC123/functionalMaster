@@ -70,10 +70,10 @@ async function handleLogin() {
     loging.value = true;
     // 获取token
     const res: any = await api.login({ name, password: password.toString() });
-
+    console.log('res23', JSON.stringify(res));
     window.$notification?.success({ title: '登录成功！', duration: 2500 });
-
     setToken(res.data.token);
+
     if (isRemember.value) setLocal('loginInfo', { name, password });
     else removeLocal('loginInfo');
 
