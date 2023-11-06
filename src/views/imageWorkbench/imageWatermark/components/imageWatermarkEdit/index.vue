@@ -2,8 +2,10 @@
   <div class="watermark_area_container">
     <div class="left">
       <div class="top">
-        <img src="@/assets/images/back.png" alt="" />
-        <span>返回</span>
+        <span @click="goBack">
+          <img src="@/assets/images/back.png" alt="" />
+          <span>返回</span>
+        </span>
       </div>
       <div class="bottom">
         <ul class="left_img_list">
@@ -18,7 +20,14 @@
         </ul>
         <div class="img_show_area">
           <img :src="imageWaterStore.updateImgUrl" alt="" />
-          <div class=""></div>
+          <!-- <canvas id="myCanvas"></canvas> -->
+          <div class="image_scale">
+            <span>-</span>
+            <span>100%</span>
+            <span>+</span>
+            <span> <SvgIcon class="icon" icon="quanping" color="#000"></SvgIcon> </span>
+            <span> <SvgIcon class="icon1" icon="smallWindow" color="#000"></SvgIcon></span>
+          </div>
         </div>
       </div>
     </div>
@@ -42,6 +51,30 @@
 import { useImageWaterStore } from '@/store';
 const imageWaterStore = useImageWaterStore();
 
+onMounted(() => {
+  // handleImageShow();
+});
+
+// 处理canvas渲染
+// const handleImageShow = () => {
+//   const canvasEle: any = document.getElementById('myCanvas');
+//   console.log('canvasEle', canvasEle);
+//   let ctx = canvasEle?.getContext('2d');
+//   var ratio = window.devicePixelRatio || 1;
+//   ctx.scale(ratio, ratio);
+//   console.log('ctx', ctx);
+//   console.log('imageWaterStore.updateImgUrl', imageWaterStore.updateImgUrl);
+//   var binaryData = atob(imageWaterStore.updateImgUrl);
+//   var byteArray = new Uint8Array(binaryData.length);
+//   console.log('byteArray', byteArray);
+//   ctx.drawImage(imageWaterStore.updateImgUrl, 0, 0);
+// };
+
+// 点击返回按钮
+const goBack = () => {
+  imageWaterStore.setUpdateImgUrl('');
+};
+
 // 点击添加文字水印按钮
 const addTextWatermark = () => {};
 
@@ -64,17 +97,19 @@ const addImageWatermark = () => {};
     border-radius: 8px;
     width: 80%;
     .top {
-      display: flex;
-      align-items: center;
-      img {
-        width: 20px;
-        height: 20px;
-        margin-right: 8px;
-        cursor: pointer;
-      }
       span {
-        font-size: 14px;
-        color: #000;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        img {
+          width: 20px;
+          height: 20px;
+          margin-right: 8px;
+        }
+        span {
+          font-size: 14px;
+          color: #000;
+        }
       }
     }
     .bottom {
@@ -135,8 +170,39 @@ const addImageWatermark = () => {};
         border-radius: 10px;
         padding: 10px 0;
         height: 600px;
+        position: relative;
         img {
           // width: 300px;
+        }
+        .image_scale {
+          position: absolute;
+          bottom: 10px;
+          right: 30px;
+          box-shadow: 0 0 10px #000e2b29;
+          border-radius: 5px;
+          box-sizing: border-box;
+          display: flex;
+          align-items: center;
+
+          span {
+            padding: 5px 10px;
+            cursor: pointer;
+            width: 16px;
+            height: 16px;
+            display: block;
+            .icon {
+              width: 16px;
+              height: 16px;
+            }
+            .icon1 {
+              width: 25px;
+              height: 25px;
+            }
+          }
+
+          span:hover {
+            // background: #f2f2f3;
+          }
         }
       }
     }
