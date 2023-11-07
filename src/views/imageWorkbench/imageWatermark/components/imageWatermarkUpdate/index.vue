@@ -8,9 +8,13 @@
         </div>
         <div class="btton">
           <div class="btn" @click="selectImage">添加图片</div>
-          <div class="btn">添加文件夹</div>
+          <div class="btn" @click="selectFile">添加文件夹</div>
         </div>
-        <input id="fileInput" ref="uploadRef" type="file" @change="handleImgChange" />
+        <input id="imgInput" ref="uploadRef" type="file" @change="handleImgChange" :multiple="true" />
+        <input id="fileInput" ref="uploadRef" type="file" @change="handleFileChange" :multiple="true" webkitdirectory />
+
+        <!-- <input type="file" id="file" style="display: none" @change="handleFile" />
+        <button class="btn_color" @click="importBatch">批量导入</button> -->
       </div>
     </div>
   </AppPage>
@@ -18,28 +22,55 @@
 
 <script setup lang="ts" name="imageWatermarkUpdate">
 import { useImageWaterStore } from '@/store';
-const imageWaterStore = useImageWaterStore()
+const imageWaterStore = useImageWaterStore();
 
+const imgInput: any = ref(null);
+
+// 点击选择图片按钮
+const selectImage = () => {
+  imgInput.value?.click();
+};
 
 const uploadRef: any = ref(null);
-const selectImage = () => {
+// 点击选择文件夹按钮
+const selectFile = () => {
   uploadRef.value?.click();
 };
 
-let imgUrl = ref('');
+// 处理单个图片文件
 const handleImgChange = (event: Event) => {
   console.log('event', event);
   const file = (event.target as any)?.files[0];
   console.log('file', file);
-  const reader = new FileReader();
+  if (file?.type && file?.type?.include('image/')) {
+    handleImg(file);
+  }
+};
 
+// 处理文件夹
+const handleFileChange = (event: Event) => {
+  const file = (event.target as any)?.files;
+  console.log('file', file);
+  for (let i = 0; i < file.length; i++) {
+    console.log('file[i]', file[i]);
+    if (file[i]?.type && file[i]?.type?.include('image/')) {
+      handleImg(file);
+    }
+  }
+};
+
+// 处理图片
+let imgUrl = ref('');
+const handleImg = (file: any) => {
+  const reader = new FileReader();
   reader.onload = (e: any) => {
     const imgURL = e.target.result;
     imgUrl.value = imgURL;
     console.log('imgURL--', imgURL);
-    imageWaterStore.setUpdateImgUrl(imgUrl.value)
+    let imgUrlList: any = [];
+    imgUrlList?.push(imgUrl.value);
+    imageWaterStore.setUpdateImgUrl(imgUrl.value);
   };
-
   reader.readAsDataURL(file);
 };
 
@@ -68,6 +99,15 @@ const handleImgChange = (event: Event) => {
 //     // 读取文件内容到ArrayBuffer
 //     reader.readAsArrayBuffer(file);
 //   });
+// };
+
+// const importBatch = () => {
+//   document.getElementById('file')?.click();
+// };
+
+// const handleFile = (event: Event) => {
+//   const file = (event.target as any)?.files;
+//   console.log('file', file);
 // };
 </script>
 
@@ -132,6 +172,9 @@ const handleImgChange = (event: Event) => {
     border: 2px dashed #3b64f6;
   }
 
+  #imgInput {
+    display: none;
+  }
   #fileInput {
     display: none;
   }
